@@ -1,85 +1,89 @@
-const Backbone = require('backbone')
+const Backbone = require('Backbone')
 const React = require('react')
 
-let ItemsModle = Backbone.Model.extend({})
+document.querySelector('#app-container').innerHTML = `<h1>YOLO</h1>`
 
-const listLanding = React.createClass({
+let TaskModel = Backbone.Model.extend({})
+
+const HomeView = React.createClass({
 
    getInitialState: function(){
-      defaultMod = new ItemsModle()
-
-      let itemsModAttributes = {
-         task: "this is your task",
-         status: "complete",
-         poster: "name"
-      }
-      defaultMod.set(itemsModAttributes)
-
-      let itemsListModArray = []
-      itemsListModArray.push(defaultMod)
-
-      let startingStateItemsObj = {
-         listData: itemsListModArray
-      }
-      return startingStateItemsObj
-   },
-
-   _addTask: function(){
-      console.log('button partly wired')
-      let theTask= this.refs.theTaskEl.value
-      let theStatus= this.refs.statusEl.value
-      let thePoster= this.refs.posterEl.value
+      let defaultMod = new TaskModel()
+      // let mod2 = new TaskModel()
 
       let modAttributes = {
-         task: theTask,
-         status: theStatus,
-         poster: thePoster
+         msg: "",
+         from: ""
       }
-      let newTaskMod = new ItemsModle()
-      newTaskMod.ste(modAttributes)
 
-      let copyOfItemsList = this.state.listData.map(function(m){return m })
-      copyOfItemsList.push(newTaskMod)
 
-      let newStateObj = {listData: copyOfItemsList}
-      this.setState(newStateObj)
+      defaultMod.set(modAttributes)
 
+      let modelsListArray = []
+      modelsListArray.push(defaultMod)
+
+
+      let startingStateObj = {
+         shoutOutData: modelsListArray
+
+      }
+      return startingStateObj
    },
 
-   render: function (){
-      return(
-      <div className="container">
-         <div className="row">
-            <h1> Add Task </h1>
-               <div className="col-sm-4 new-task">
-               <h5> New Task </h5>
-               <input type="text" className="form-control" ref="theTaskEl"/>
-               <br/>
-               <input type="text" className="form-control" ref="statusEl"/>
-               <br/>
-               <input type="text" className="form-control" ref="posterEl"/>
-               <button className="btn btn-block btn-success btn-lg" onClick={this._addTask}>addSubmit</button>
+
+
+   _addSubmission: function(){
+      let theMsg = this.refs.theMsgEl.value
+      let msgFrom = this.refs.msgFromEl.value
+
+      let modAttributes = {
+            msg: theMsg,
+            from: msgFrom
+      }
+      let newMod = new TaskModel()
+      newMod.set(modAttributes)
+
+      let copyOfShoutList = this.state.shoutOutData.map(function(m){return m })
+      copyOfShoutList.push(newMod)
+
+      let newStateObj = {shoutOutData: copyOfShoutList}
+      this.setState(newStateObj)
+   },
+
+   render: function(){
+      return (
+         <div className="container">
+               <div className="row">
+                     <div className="col-sm-4 new-shoutout">
+                        <h3> My task </h3>
+                        <input type="text" className="form-control" ref= "theMsgEl"/>
+                        <hr/>
+                        <h4>posted by</h4>
+                        <input type="text" className="form-control" ref= "msgFromEl"/>
+                        <hr/>
+                        <br/>
+                        <button className="btn btn-block btn-success btn-lg" onClick={this._addSubmission}>add Task </button>
+                  </div>
+                  <ShoutOut shoutData={ this.state.shoutOutData }/>
                </div>
-            <ShoutOut shoutData={ this.state.listData }/>
-         </div>
-      </div>
+            </div>
       )
    }
 })
 
-const Something = React.createClass({
+const ShoutOut = React.createClass({
    render: function(){
-      let arrayOfJSXItems = this.props.listData.map(function(sMod){
+      let arrayOfShoutOutJSX = this.props.shoutData.map(function(smod){
          return (
-            <TaskItems shoutModl={sMod} key={sMod.cid}>
+            <ShoutItem shoutModl={smod} key={smod.cid}/>
          )
       })
       return (
          <div className="col-sm-8">
-         <h2> !New-items !</h2>
+         <h2> Task List </h2>
             <div className="shoutOut">
 
-               {arrayOfJSXItems}
+               {arrayOfShoutOutJSX}
 
             </div>
          </div>
@@ -87,20 +91,17 @@ const Something = React.createClass({
    }
 })
 
-const TaskItems = React.createClass({
-  render: function(){
-     return (
-        <div style={background: 'indianred', color: '#fff', padding: '4rem'}>
-           <p>{this.props.shoutModl.get('task')}</p>
-           <p>{this.props.shoutModl.get('status')}</p>
-           <p>{this.props.shoutModl.get('poster')}</p>
-        </div>
-     )
-  }
+const ShoutItem = React.createClass({
+   render: function(){
+      return (
+
+            <p>{this.props.shoutModl.get('msg')}___from___{this.props.shoutModl.get('from')}</p>
+
+      )
+   }
 })
 
 
 
-module.exports= listLanding
-module.exports= Something
-module.exports= TaskItems
+
+module.exports= HomeView

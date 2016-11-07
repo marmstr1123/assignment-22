@@ -10,3 +10,22 @@ h1 {
 	text-align: center;
 	color: fuchsia;
 }
+#app-container{
+	background: url('http://www.clipartkid.com/images/344/maps-and-hyperbase42-charting-the-hypergrid-be-cunning-and-full-of-ZLlD4L-clipart.png') no-repeat;
+	height: 100vh;
+	.container{
+		padding-top: 80px;
+	}
+	.thumbnail{
+		background: radial-gradient(closest-side at 50% 50%, #D91E18  10%,rgba(0, 0, 0, 0) 85%);
+      text-decoration: none;
+	}
+	.thumbnail{
+      padding-top: 80px;
+      border: none;
+      text-align: center;
+      text-decoration: none;
+      color: #FFF;
+      width: 80%;
+	}
+}
