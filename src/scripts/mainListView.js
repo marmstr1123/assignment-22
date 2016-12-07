@@ -24,7 +24,7 @@ const HomeView = React.createClass({
 
 
       let startingStateObj = {
-         shoutOutData: modelsListArray
+         taskItemData: modelsListArray
 
       }
       return startingStateObj
@@ -32,7 +32,7 @@ const HomeView = React.createClass({
 
 
 
-   _addSubmission: function(){
+   _addNewTask: function(){
       let theMsg = this.refs.theMsgEl.value
       let msgFrom = this.refs.msgFromEl.value
 
@@ -43,10 +43,10 @@ const HomeView = React.createClass({
       let newMod = new TaskModel()
       newMod.set(modAttributes)
 
-      let copyOfShoutList = this.state.shoutOutData.map(function(m){return m })
-      copyOfShoutList.push(newMod)
+      let copyOfTaskList = this.state.taskItemData.map(function(m){return m })
+      copyOfTaskList.push(newMod)
 
-      let newStateObj = {shoutOutData: copyOfShoutList}
+      let newStateObj = {taskItemData: copyOfTaskList}
       this.setState(newStateObj)
    },
 
@@ -54,7 +54,7 @@ const HomeView = React.createClass({
       return (
          <div className="container">
                <div className="row">
-                     <div className="col-sm-4 new-shoutout">
+                     <div className="col-sm-4 new-Taskout">
                         <h3> My task </h3>
                         <input type="text" className="form-control" ref= "theMsgEl"/>
                         <hr/>
@@ -62,40 +62,43 @@ const HomeView = React.createClass({
                         <input type="text" className="form-control" ref= "msgFromEl"/>
                         <hr/>
                         <br/>
-                        <button className="btn btn-block btn-success btn-lg" onClick={this._addSubmission}>add Task </button>
+                        <button className="btn btn-block btn-success btn-lg" onClick={this._addNewTask}>add Task </button>
                   </div>
-                  <ShoutOut shoutData={ this.state.shoutOutData }/>
+                  <TaskOut TaskData={ this.state.taskItemData }/>
                </div>
             </div>
       )
    }
 })
 
-const ShoutOut = React.createClass({
+const TaskOut = React.createClass({
    render: function(){
-      let arrayOfShoutOutJSX = this.props.shoutData.map(function(smod){
+      let arrayOfjsxTasks = this.props.TaskData.map(function(smod){
          return (
-            <ShoutItem shoutModl={smod} key={smod.cid}/>
+            <TaskItem taskmodl={smod} key={smod.cid}/>
          )
       })
       return (
          <div className="col-sm-8">
          <h2> Task List </h2>
-            <div className="shoutOut">
+            <div className="Task">
+               <ul>
 
-               {arrayOfShoutOutJSX}
+               {arrayOfjsxTasks}
 
+               </ul>
             </div>
          </div>
       )
    }
 })
 
-const ShoutItem = React.createClass({
+const TaskItem = React.createClass({
    render: function(){
       return (
 
-            <p>{this.props.shoutModl.get('msg')}___from___{this.props.shoutModl.get('from')}</p>
+            <a href="#details"><li>{this.props.taskmodl.get('msg')}
+            ~{this.props.taskmodl.get('from')}</li></a>
 
       )
    }
